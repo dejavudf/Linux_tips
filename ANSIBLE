@@ -1,0 +1,187 @@
+ANSIBLE:
+yamllint = cmd toot for check YML ident
+
+ansible date var:
+ tasks:
+  - name: Ansible date fact example
+    debug:
+      var=ansible_date_time.date
+
+List module: ansible-doc -l
+templates = jinja
+-c local = agentless
+
+hostfile:
+[ios]
+192.168.0.x
+
+---> WITHOUT PLAYBOOK:
+command (raw):
+sudo ansible 192.168.0.49 -i ahosts -m raw -a "show run" -u alex -k
+sudo ansible -i ahosts -m raw -a "show run" -u alex -k ios (info inside hostfile)
+
+command (not raw):
+ansible -i ./ahosts -m ios_command -a "commands='show version'" -c local -u alex -k ios
+
+command: get info
+ansible -i ahosts -m ios_facts 192.168.0.49 -u alex -k
+ansible -i ahosts -m ios_facts -u alex -k ios (info inside hostfile)
+ansible -i ahosts -m ios_facts -c local -u alex -k ios
+
+---> WITH PLAYBOOK:
+
+ansible-playbook playbook_bck_ios.yml -i ./ahosts -M ios_command -u alex -k
+ansible-playbook playbook_bck_ios.yml -i ./ahosts -u alex -k
+
+* show version (raw):
+---
+- name: Show version of IOS running on routers
+hosts: routers
+gather_facts: false
+tasks:
+- name: Use raw mode to show version
+raw: "show version"
+register: print_output
+- debug: var=print_output.stdout_lines
+
+* command: show run and backup config
+---
+- name: Backup running-config on routers
+hosts: routers
+gather_facts: false
+connection: local
+tasks:
+- name: Backup the current config
+ios_command:
+authorize: yes
+commands: 
+- show run
+register: print_output
+- name: save output to a file
+copy: content="{{ print_output.stdout[0] }}" dest="./output/
+{{ inventory_hostname }}.txt"
+
+* command: commands 
+---
+- name: Show IOS version and interfaces on switches
+hosts: switches
+gather_facts: false
+connection: local
+tasks:
+- name: Run multiple commands and evaluate the output
+ios_command:
+authorize: yes
+commands:
+- show version
+- show interfaces
+register: print_output
+- debug: var=print_output.stdout
+
+* command: show version
+---
+- name: Execute 'show version' on device(s)
+hosts: "{{ host }}”
+gather_facts: false
+connection: local
+tasks:
+- name: Run show version
+ios_command:
+authorize: yes
+commands:
+- show version
+register: print_output
+- debug: var=print_output.stdout
+# ansible-playbook show-version.yml -e “host=newtarget(s)"
+# ansible-playbook show-version.yml -e “host=routers”
+
+* command: config
+---
+- name: Define a VLAN
+hosts: "{{ host | default(‘switches') }}"
+gather_facts: false
+connection: local
+tasks:
+- name: Define VLAN
+ios_config:
+timeout: 60
+authorize: yes
+parents: "vlan {{ vlan }}”
+lines: ”name {{ vlanname }}”
+- name: List VLANs
+ios_command:
+commands: ”show vlan | include {{ vlan }}.*active”
+register: print_output
+- debug: var=print_output.stdout
+# ansible-playbook set-vlan.yml -e “vlan=250 vlanname=My-new-VLAN”
+
+* command: facts (get something)
+---
+- name: Collect facts on an IOS device
+hosts: "{{ host | default(‘switches') }}"
+gather_facts: false
+connection: local
+tasks:
+- name: Collect facts
+ios_facts:
+# gather_subset: all
+- debug:
+msg:
+- "Router
+{{
+- "Hostname:
+{{
+- "S/N:
+{{
+- "OS version: {{
+when:
+- ansible_net_model
+inventory_hostname }}"
+ansible_net_hostname }}"
+ansible_net_serialnum }}"
+ansible_net_version }}"
+| regex_search(‘3945')
+
+* IOS MODULES:
+
+• Ios
+• ios_banner - Manage multiline banners on Cisco IOS devices
+• ios_command - Run commands on remote devices running Cisco IOS
+• ios_config - Manage Cisco IOS configuration sections
+• ios_facts - Collect facts from remote devices running Cisco IOS
+• ios_interface - Manage Interface on Cisco IOS network devices
+• ios_logging - Manage logging on network devices
+• ios_ping - Tests reachability using ping from IOS switch
+• ios_static_route - Manage static IP routes on Cisco IOS network devices
+• ios_system - Manage the system attributes on Cisco IOS devices
+• ios_user - Manage the aggregate of local users on Cisco IOS device
+• ios_vrf - Manage the collection of VRF definitions on Cisco IOS devices
+
+IDENT:
+---
+- name: Backup running-config on routers
+  hosts: 192.168.0.254
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: Backup the current config
+    ios_command:
+    authorize: yes
+      commands: show run
+    register: print_output
+  - name: save output to a file
+    copy: content="{{ print_output.stdout[0] }}" dest="./output/{{ inventory_hostname }}.txt"
+
+---
+- name: Show IOS version and interfaces on switches
+  hosts: ios
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: Run multiple commands and evaluate the output
+    ios_command:
+      authorize: yes
+      commands: show version
+      commands: show interfaces
+    register: print_output
+  - debug: var=print_output.stdout
+
