@@ -1,0 +1,40 @@
+Vamp Plugin:
+
+alexsandro@alex-note:/scripts$ ls -thalis /usr/local/lib/
+total 16K
+7995395 4,0K drwxr-xr-x  4 root root  4,0K fev  3 15:29 .
+7998416    0 lrwxrwxrwx  1 root root    21 fev  3 15:29 vamp -> /home/alexsandro/vamp
+
+How to Install
+A Vamp plugin set consists of a single dynamic library file with .dll, .dylib, or .so extension (depending on your platform), plus optionally a category file with .cat extension and an RDF description file with .ttl or .n3 extension.
+To install a plugin set, copy the plugin's library file and any supplied category or RDF files into your system or personal Vamp plugin location.
+The plugin file extension and the location to copy into depend on which operating system you are using:
+Your operating system
+File extension for plugins
+Where to put the plugin files
+macOS
+.dylib
+On a Mac:
+* Put plugins for all users to use in /Library/Audio/Plug-Ins/Vamp
+* Put plugins for only the current user in $HOME/Library/Audio/Plug-Ins/Vamp
+* The Library folders are hidden by default; see here for details of how to show them
+64-bit Windows
+.dll
+When using a 64-bit version of Windows:
+* Put 32-bit plugins in C:\Program Files (x86)\Vamp Plugins
+* Put 64-bit plugins in C:\Program Files\Vamp Plugins
+* Both 32-bit and 64-bit plugins can be used, as long as you put them in the right places as above
+* If a plugin package is not described as 64-bit, then it is a 32-bit plugin. Some older plugins were only published in 32-bit form.
+32-bit Windows
+.dll
+When using a 32-bit version of Windows:
+* Put 32-bit plugins in C:\Program Files\Vamp Plugins
+* You cannot use 64-bit plugins at all on 32-bit Windows
+* If a plugin package is not described as 64-bit, then it is a 32-bit plugin. Some older plugins were only published in 32-bit form.
+Linux, other Unix
+.so
+On Linux, BSD systems, etc:
+* Put plugins for all users to use in /usr/local/lib/vamp
+* Put plugins for only the current user in $HOME/vamp
+* Only plugins with the correct architecture can be used (32-bit plugins on 32-bit systems, and 64-bit on 64-bit).
+You can alternatively set the VAMP_PATH environment variable to override the search path for for Vamp plugins. VAMP_PATH should contain a semicolon-separated (on Windows) or colon-separated (macOS, Linux) list of directory locations. If it is set, it will completely override the standard locations listed above. (N.B. When using 32-bit plugins on 64-bit Windows, some hosts will check for the VAMP_PATH_32 environment variable instead of VAMP_PATH.)
