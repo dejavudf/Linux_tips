@@ -1,0 +1,7 @@
+Iomega iConnect:
+
+https://192.168.0.250/support.html (enable ssh and sftp)
+
+Log-in to the device (ssh root@storage.local); the password is “soho”+ your admin password (if your password is ‘foo’, the the password you need to use for ssh is ‘sohofoo’).
+
+https://192.168.0.250/stg-ftp.html
