@@ -1,0 +1,21 @@
+Time/Date NTP/UTC/DTS/RTC:
+
+apt-get install ntp ntpdate (instala ntpclient)
+
+/etc/ntp.conf (config do ntp server)
+
+ntpq -p (checa status ntp sincronização)
+
+tzselect (escolhe timezone região)
+
+dpkg-reconfigure tzdata (escolhe timezone cidade)
+
+apt-get --only-upgrade install tzdata (atualiza somente tzdata)
+
+zdump -v /etc/localtime | grep 2018 (checar DTS aplicado)
+
+cat /etc/timezone (check timezone selecionado)
+
+ hwclock (mostra hora real ajustada no relógio)
+
+date (check hora)
