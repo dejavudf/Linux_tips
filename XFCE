@@ -1,0 +1,28 @@
+XFCE domain user login:
+
+Edit /etc/lightdm/lightdm.conf and add the following line :
+greeter-show-manual-login=true
+
+hepta.alexsandro.f@hb-9cyjsy2-l:/etc/lightdm/lightdm.conf.d$ cat 70-linuxmint.conf 
+[SeatDefaults]
+user-session=xfce
+greeter-hide-users=false
+greeter-show-manual-login=true
+allow-guest=false
+
+sudo service lightdm restart
+
+XFCE suspend lock screen asking for passworkd:
+
+Can you try this (it will grant "all users" the right to suspend and maybe override what is happening). Create the file /usr/share/polkit-1/rules.d/85-suspend.rules with the following content:
+
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.login1.suspend" &&
+        subject.isInGroup("users")) {
+        return polkit.Result.YES;
+    }
+});
+...and restart the policykit daemon:
+
+
+sudo systemctl restart polkit
