@@ -1,0 +1,10 @@
+1. Inicialize Physical Disk for LVM: pvcreate /dev/sdb /dev/sdc
+2. Check: pvdisplay
+3. Create Volume Group: vgcreate dados /dev/sdb /dev/sdc
+4. Check: vgdisplay
+5. Create Logical Volume (only one logical volume with all free space): lvcreate -n lv_apps -l 100%FREE vg_apps
+6. Create Logical Volume (two logical volumes): lvcreate -L 108G -n lv_apps vg_apps
+7. Check: lvdisplay
+8. Format Logical Volume: mkfs.ext4 /dev/vg_apps/lv_apps
+
+pv (physical volume) -> vg (volume group) -> lv (logical volume) -> format -> mount
