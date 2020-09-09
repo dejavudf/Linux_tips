@@ -1,0 +1,97 @@
+Zabbix Agent Install:
+
+Pegar config (LAN): scp root@10.1.20.103:/etc/zabbix/zabbix_agentd.conf .
+Pegar config (DMZ): scp root@172.16.200.130:/etc/zabbix/zabbix_agentd.conf .
+
+---> Install Zabbix Agent [CentOS RHEL]
+
+### Step 1 – Add Required Repository
+Before installing Zabbix Agent, first configure zabbix yum repository using following commands as per your required version and operating system.
+
+CentOS/RHEL 5:
+i386:
+	wget https://repo.zabbix.com/zabbix/3.4/rhel/5/i386/zabbix-agent-3.4.9-1.el5.i386.rpm
+	yum install https://repo.zabbix.com/zabbix/3.4/rhel/5/i386/zabbix-agent-3.4.9-1.el5.i386.rpm
+	rpm -ivh zabbix-agent-3.4.9-1.el5.i386.rpm
+x64:
+	wget https://repo.zabbix.com/zabbix/3.4/rhel/5/x86_64/zabbix-agent-3.4.9-1.el5.x86_64.rpm
+	yum install https://repo.zabbix.com/zabbix/3.4/rhel/5/x86_64/zabbix-agent-3.4.9-1.el5.x86_64.rpm
+	rpm -ivh zabbix-agent-3.4.9-1.el5.x86_64.rpm
+
+CentOS/RHEL 7:
+$ rpm -Uvh http://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm
+
+CentOS/RHEL 6:
+$ rpm -Uvh http://repo.zabbix.com/zabbix/3.0/rhel/6/x86_64/zabbix-release-3.0-1.el6.noarch.rpm
+### Step 2 – Install Zabbix Agent
+After installing yum repository packages in our system. Now use following command to install Zabbix agent on your Linux system.
+
+$ yum install zabbix-agent
+### Step 3 – Edit Zabbix Agent Configuration
+As zabbix agent has been successfully installed on our remote system. Now we just need to configure zabbix agent by adding zabbix server ip in its configuration file /etc/zabbix/zabbix_agentd.conf
+
+ ServerActive=<zabbix server ip/zabbix proxy ip>
+ Server=<same as ServerActive>
+ Hostname=<Hostname>
+
+### Step 4 – Restarting Zabbix Agent
+After adding zabbix server ip in configuration file, now restart agent service using below command.
+
+$ service zabbix-agent restart
+To start and stop zabbix-agent service anytime use following commands.
+
+$ service zabbix-agent start
+$ service zabbix-agent stop
+
+###########################################################################################################################
+
+---> Install Zabbix Agent [DEBIAN]
+
+Adding Zabbix repository
+Install the repository configuration package. This package contains apt (software package manager) configuration files.
+
+For Debian 9, run the following commands:
+
+Note! For Debian 8, substitute 'stretch' with 'jessie' in the commands. For Debian 7, substitute 'stretch' with 'wheezy' in the commands.
+
+Debian 9:
+# wget http://repo.zabbix.com/zabbix/3.4/debian/pool/main/z/zabbix-release/zabbix-release_3.4-1+stretch_all.deb
+# dpkg -i zabbix-release_3.4-1+stretch_all.deb
+# apt update
+For Ubuntu 18.04 (bionic), run the following commands:apt-g
+
+Debian 6:
+# wget http://repo.zabbix.com/zabbix/2.2/debian/pool/main/z/zabbix-release/zabbix-release_2.2-2+squeeze_all.deb 
+# dpkg -i zabbix-release_2.2-2+squeeze_all.deb 
+# apt update
+
+Debian 7:
+# wget http://repo.zabbix.com/zabbix/3.4/debian/pool/main/z/zabbix-release/zabbix-release_3.4-1+wheezy_all.deb 
+# dpkg -i zabbix-release_3.4-1+wheezy_all.deb 
+# apt update
+
+Debian 8:
+# wget http://repo.zabbix.com/zabbix/3.4/debian/pool/main/z/zabbix-release/zabbix-release_3.4-1+jessie_all.deb
+# dpkg -i zabbix-release_3.4-1+jessie_all.deb
+# apt update
+
+Ubuntu 18:
+# wget http://repo.zabbix.com/zabbix/3.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.4-1+bionic_all.deb
+# dpkg -i zabbix-release_3.4-1+bionic_all.deb
+# apt update
+For Ubuntu 16.04, substitute 'bionic' with 'xenial' in the commands.
+For Ubuntu 14.04, substitute 'bionic' with 'trusty' in the commands.
+
+Agent installation
+To install the agent, run
+
+# apt install zabbix-agent
+To start the agent, run:
+
+# service zabbix-agent start
+
+#################################################################################################################################
+
+
+http://repo.zabbix.com/zabbix/3.4/
+
