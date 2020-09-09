@@ -1,0 +1,6 @@
+Vbox cli (cmd):
+
+vboxmanage starvm EVE-NG-DEJAVUDF-v1.1
+vboxmanage controlvm EVE-NG-DEJAVUDF-v1.1 poweroff
+Vboxmanager list vms
+Vboxmanager list runningvms
