@@ -1,0 +1,125 @@
+Install IOU LINUX
+
+Use the following in your sources.list:
+* deb http://archive.debian.org/debian squeeze main
+* deb http://archive.debian.org/debian squeeze-lts main
+The second line will fail with an "expired" type message, so you also need to add the following in /etc/apt/apt.conf (create it if it doesn't already exist):
+* Acquire::Check-Valid-Until false;
+
+sudo dpkg --list 'linux-image*'|awk '{ if ($1=="ii") print $2}'|grep -v `uname -r`
+echo "Get image name and type command: sudo apt-get purge linux-image-X.Y.Z-H-generic"
+
+IOU LIBS:
+sudo apt-get install libc6:i386
+sudo apt-get install lib32z1
+sudo apt-get install ia32-libs:i386  
+sudo ln -s /lib/x86_64-linux-gnu/libcrypto.so.1.0.0 /usr/lib/libcyrpto.so.4 - talve nem precise. copie a biblioteca libcrypto.so.4 para a pasta.
+wget http://www.ipvanquish.com/download/CiscoIOUKeygen3f.py
+python3 CiscoIOUKeygen3f.py
+python3 keygen.py
+sudo hostnamectl set-hostname flyxj - não precisa
+
+chmod -R 755 /home/alexsandro/iou/
+
+~/.bashrc
+
+export PATH=$PATH:/home/alexsandro/iou
+
+--> Install 1:
+
+sudo apt-get install libc6:i386
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  gcc-6-base:i386 libgcc1:i386
+Suggested packages:
+  glibc-doc:i386 locales:i386
+The following NEW packages will be installed:
+  gcc-6-base:i386 libc6:i386 libgcc1:i386
+0 upgraded, 3 newly installed, 0 to remove and 22 not upgraded.
+Need to get 2.327 kB of archives.
+After this operation, 10,0 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://br.archive.ubuntu.com/ubuntu xenial/main i386 gcc-6-base i386 6.0.1-0ubuntu1 [14,3 kB]
+Get:2 http://br.archive.ubuntu.com/ubuntu xenial/main i386 libgcc1 i386 1:6.0.1-0ubuntu1 [46,8 kB]
+Get:3 http://br.archive.ubuntu.com/ubuntu xenial-updates/main i386 libc6 i386 2.23-0ubuntu10 [2.266 kB]
+Fetched 2.327 kB in 1s (1.473 kB/s)
+Preconfiguring packages ...
+Selecting previously unselected package gcc-6-base:i386.
+(Reading database ... 189458 files and directories currently installed.)
+Preparing to unpack .../gcc-6-base_6.0.1-0ubuntu1_i386.deb ...
+Unpacking gcc-6-base:i386 (6.0.1-0ubuntu1) ...
+Selecting previously unselected package libgcc1:i386.
+Preparing to unpack .../libgcc1_1%3a6.0.1-0ubuntu1_i386.deb ...
+Unpacking libgcc1:i386 (1:6.0.1-0ubuntu1) ...
+Selecting previously unselected package libc6:i386.
+Preparing to unpack .../libc6_2.23-0ubuntu10_i386.deb ...
+Unpacking libc6:i386 (2.23-0ubuntu10) ...
+Processing triggers for libc-bin (2.23-0ubuntu10) ...
+Setting up gcc-6-base:i386 (6.0.1-0ubuntu1) ...
+Setting up libgcc1:i386 (1:6.0.1-0ubuntu1) ...
+Setting up libc6:i386 (2.23-0ubuntu10) ...
+Processing triggers for libc-bin (2.23-0ubuntu10) ...
+
+--> Install 2:
+
+sudo apt-get install lib32z1
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  libc6-i386
+The following NEW packages will be installed:
+  lib32z1 libc6-i386
+0 upgraded, 2 newly installed, 0 to remove and 22 not upgraded.
+Need to get 2.388 kB of archives.
+After this operation, 10,6 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://br.archive.ubuntu.com/ubuntu xenial-updates/main amd64 libc6-i386 amd64 2.23-0ubuntu10 [2.336 kB]
+Get:2 http://br.archive.ubuntu.com/ubuntu xenial-updates/main amd64 lib32z1 amd64 1:1.2.8.dfsg-2ubuntu4.1 [52,2 kB]
+Fetched 2.388 kB in 1s (1.601 kB/s)
+Selecting previously unselected package libc6-i386.
+(Reading database ... 189767 files and directories currently installed.)
+Preparing to unpack .../libc6-i386_2.23-0ubuntu10_amd64.deb ...
+Unpacking libc6-i386 (2.23-0ubuntu10) ...
+Replaced by files in installed package libc6:i386 (2.23-0ubuntu10) ...
+Selecting previously unselected package lib32z1.
+Preparing to unpack .../lib32z1_1%3a1.2.8.dfsg-2ubuntu4.1_amd64.deb ...
+Unpacking lib32z1 (1:1.2.8.dfsg-2ubuntu4.1) ...
+Processing triggers for libc-bin (2.23-0ubuntu10) ...
+Setting up libc6-i386 (2.23-0ubuntu10) ...
+Setting up lib32z1 (1:1.2.8.dfsg-2ubuntu4.1) ...
+Processing triggers for libc-bin (2.23-0ubuntu10) ...
+
+root@ciscoiou:/home/iou# ldd wrapper-linux
+        linux-gate.so.1 (0xf7730000)
+        libnsl.so.1 => /lib32/libnsl.so.1 (0xf770c000)
+        libdl.so.2 => /lib32/libdl.so.2 (0xf7707000)
+        libcrypto.so.4 => /usr/lib/libcrypto.so.4 (0xf75aa000)
+        libm.so.6 => /lib32/libm.so.6 (0xf7555000)
+        libgcc_s.so.1 => /lib/libgcc_s.so.1 (0xf7537000)
+        libc.so.6 => /lib32/libc.so.6 (0xf7380000)
+        /lib/ld-linux.so.2 (0xf7732000)
+        libz.so.1 => /usr/lib32/libz.so.1 (0xf7363000)
+
+
+Run binnary (cisco iou): ../i86bi-linux-l3-adventerprisek9-15.5.2T.bin -e 1 -s 6 1 > /dev/null 2>&1 &
+
+Pape ipsvd
+With Gerrit Pape's ipsvd, tcpsvd spawns the service script:
+#!/bin/sh -e
+exec tcpsvd -v 0.0.0.0 7777 ./service
+
+sample: nohup  tcpsvd -v 0.0.0.0 2002 ../i86bi-linux-l3-adventerprisek9-15.5.2T.bin -e 1 -s 6 2 ​​> /dev/null 2>&1 &
+
+Bernstein ucspi-tcp
+With Daniel J. Bernstein's ucspi-tcp, tcpserver spawns the service script:
+#!/bin/sh -e
+exec tcpserver -v -P -R -H -l 0 0.0.0.0 7777 ./service
+There are IPv6-capable enhanced versions of Bernstein ucspi-tcp. With Erwin Hoffman's, tcpserver attempts to handle both IPv4 and IPv6 in one (if the operating system supports this, a few do not) and spawns the service script:
+#!/bin/sh -e
+exec tcpserver -v -P -R -H -l 0 ::0 7777 ./service
+
+
+
