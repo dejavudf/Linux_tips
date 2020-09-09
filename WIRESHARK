@@ -1,0 +1,69 @@
+Wireshark:
+
+Filters – relationships operators
+eq, == equal
+ne, != not equal
+gt, > greater
+lt, < lower
+ge, >= greater or equal
+le, <= lower or equal
+
+Filters – logic operators
+and, && logical AND
+or, || logical OR
+not, ! logical NOT
+Filters - protocols
+arp, dns, tcp, udp, ip, ipv6, irc, idp, ipx, http, pop, smtp, ftp, gnutella, image-jfif, kerberos, l2tp,
+netlogon, smb...
+
+Filters – protocol fields (eth)
+The Wireshark – filters and statistics
+Strona 4
+eth.addr ==
+eth.dst ==
+eth.len ==
+eth.src ==
+eth.trailer ==
+eth.type ==
+
+Filters – protocol fields (IP)
+ip.dst eq www.mit.edu
+ip.src == 192.168.1.1
+ip.addr == 129.111.0.0/16
+ip.fragment ==
+ip.id ==
+ip.len ==
+ip.ttl ==
+
+Filters – protocol fields (TCP)
+tcp.port == 80
+tcp.dstport ==
+tcp.srcport ==
+tcp.ack == numer potwierdzenia
+tcp.flags == flaga 8-bit
+tcp.flags.reset {ack, syn, fin, }
+tcp.len == ???
+tcp.window_size ==
+
+Filters – protocol fields (UDP)
+udp.checksum
+udp.checksum_bad
+udp.dstport
+udp.length
+udp.port
+udp.srcport
+
+Filters – protocol fields (HTTP)
+http.cookie ==
+http.host ==
+
+Filters – protocol fields (echo)
+echo.data ==
+echo.request
+echo.response
+
+Examples:
+Traffic of telnet service for particular host
+tcp.port==23 and host==10.0.0.5
+Traffic of telnet service for all host except selected one
+tcp.port==23 and not host==10.0.0.5
