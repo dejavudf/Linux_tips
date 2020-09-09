@@ -1,0 +1,13 @@
+Ssh key login:
+
+Step 1. Ssh-keygen (generate key file) without password
+
+
+Step 2. Ssh-add keyfile (copy keyfile to system id)
+
+
+Step 3. Ssh-copy-id user@ip_hostname (copy system id to remote server)
+
+
+Step 4. Try to login.
+Or use sshpass.
