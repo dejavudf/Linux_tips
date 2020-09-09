@@ -1,0 +1,8 @@
+Raspberry disable usb:
+echo "0" | sudo tee /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1:1.0/1-1-port2
+
+sudo sh -c "echo 0 > /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1:1.0/1-1-port2"
+
+Final ok (porta 2 com defeito): 
+
+echo "0" | sudo tee /sys/devices/platform/soc/3f980000.usb/usb1/1-1/1-1:1.0/1-1-port2/power/pm_qos_no_power_off
